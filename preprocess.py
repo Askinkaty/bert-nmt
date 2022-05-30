@@ -99,7 +99,7 @@ def main(args):
         print("| [{}] Dictionary: {} types".format(lang, len(vocab) - 1))
         # output_prefix += '.bert' if isinstance(vocab, BertTokenizer) else ''
         output_prefix += ''
-        input_prefix += '.bert' if isinstance(vocab, BertTokenizer) else ''
+        # input_prefix += '.bert' if isinstance(vocab, BertTokenizer) else ''
         input_prefix += ''
         n_seq_tok = [0, 0]
         replaced = Counter()
