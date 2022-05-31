@@ -132,7 +132,7 @@ class LanguagePairDataset(FairseqDataset):
     def __getitem__(self, index):
         tgt_item = self.tgt[index] if self.tgt is not None else None
         src_item = self.src[index]
-        src_bert_item = self.srcbert[index]
+        src_bert_item = self.srcbert[index] if self.srcbert is not None else None
         # Append EOS to end of tgt sentence if it does not have an EOS and remove
         # EOS from end of src sentence if it exists. This is useful when we use
         # use existing datasets for opposite directions i.e., when we want to
@@ -197,7 +197,8 @@ class LanguagePairDataset(FairseqDataset):
         enforce ``--max-tokens`` during batching."""
         # return max(self.src_sizes[index], self.tgt_sizes[index] if self.tgt_sizes is not None else 0)
         a = max(self.src_sizes[index], self.tgt_sizes[index] if self.tgt_sizes is not None else 0)
-        return max(a, self.srcbert_sizes[index])
+        b = self.srcbert_sizes[index] if self.srcbert_sizes is not None else 0
+        return max(a, b)
 
     def size(self, index):
         """Return an example's size as a float or tuple. This value is used when
@@ -226,4 +227,5 @@ class LanguagePairDataset(FairseqDataset):
         self.src.prefetch(indices)
         if self.tgt is not None:
             self.tgt.prefetch(indices)
-        self.srcbert.prefetch(indices)
+        if self.srcbert is not None:
+            self.srcbert.prefetch(indices)
