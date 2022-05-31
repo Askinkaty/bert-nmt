@@ -97,10 +97,10 @@ def main(args):
 
     def make_binary_dataset(vocab, input_prefix, output_prefix, lang, num_workers):
         print("| [{}] Dictionary: {} types".format(lang, len(vocab) - 1))
-        # output_prefix += '.bert' if isinstance(vocab, BertTokenizer) else ''
-        output_prefix += ''
-        # input_prefix += '.bert' if isinstance(vocab, BertTokenizer) else ''
-        input_prefix += ''
+        output_prefix += '.bert' if isinstance(vocab, BertTokenizer) else ''
+        # output_prefix += ''
+        input_prefix += '.bert' if isinstance(vocab, BertTokenizer) else ''
+        # input_prefix += ''
         n_seq_tok = [0, 0]
         replaced = Counter()
 
