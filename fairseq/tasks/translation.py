@@ -40,10 +40,10 @@ def load_langpair_dataset(
         # infer langcode
         if split_exists(split_k, src, tgt, src, data_path):
             prefix = os.path.join(data_path, '{}.{}-{}.'.format(split_k, src, tgt))
-            bertprefix = os.path.join(data_path, '{}.bert.{}-{}.'.format(split_k, src, tgt))
+            # bertprefix = os.path.join(data_path, '{}.bert.{}-{}.'.format(split_k, src, tgt))
         elif split_exists(split_k, tgt, src, src, data_path):
             prefix = os.path.join(data_path, '{}.{}-{}.'.format(split_k, tgt, src))
-            bertprefix =  os.path.join(data_path, '{}.bert.{}-{}.'.format(split_k, tgt, src))
+            # bertprefix =  os.path.join(data_path, '{}.bert.{}-{}.'.format(split_k, tgt, src))
         else:
             if k > 0:
                 break
@@ -54,8 +54,8 @@ def load_langpair_dataset(
                                                          fix_lua_indexing=True, dictionary=src_dict))
         tgt_datasets.append(indexed_dataset.make_dataset(prefix + tgt, impl=dataset_impl,
                                                          fix_lua_indexing=True, dictionary=tgt_dict))
-        srcbert_datasets.append(indexed_dataset.make_dataset(bertprefix + src, impl=dataset_impl,
-                                                         fix_lua_indexing=True, ))
+        # srcbert_datasets.append(indexed_dataset.make_dataset(bertprefix + src, impl=dataset_impl,
+        #                                                  fix_lua_indexing=True, ))
 
         print('| {} {} {}-{} {} examples'.format(data_path, split_k, src, tgt, len(src_datasets[-1])))
 
@@ -66,7 +66,7 @@ def load_langpair_dataset(
 
     if len(src_datasets) == 1:
         src_dataset, tgt_dataset = src_datasets[0], tgt_datasets[0]
-        srcbert_datasets = srcbert_datasets[0]
+        # srcbert_datasets = srcbert_datasets[0]
     else:
         sample_ratios = [1] * len(src_datasets)
         sample_ratios[0] = upsample_primary
@@ -77,7 +77,8 @@ def load_langpair_dataset(
     return LanguagePairDataset(
         src_dataset, src_dataset.sizes, src_dict,
         tgt_dataset, tgt_dataset.sizes, tgt_dict,
-        srcbert_datasets, srcbert_datasets.sizes, berttokenizer,
+        None, None, berttokenizer,
+        # srcbert_datasets, srcbert_datasets.sizes, berttokenizer,
         left_pad_source=left_pad_source,
         left_pad_target=left_pad_target,
         max_source_positions=max_source_positions,
